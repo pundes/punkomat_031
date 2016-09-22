@@ -65,7 +65,7 @@ function draw() {
         }
       }
       if(j > 0 && j < particles[i].length) {
-        stroke(200, 200, 200);
+        stroke(180, 180, 180);
         strokeWeight(0.015);
         line(particles[i][j].pos.x, particles[i][j].pos.y, particles[i][j-1].pos.x, particles[i][j-1].pos.y);
       }
