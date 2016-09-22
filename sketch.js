@@ -7,27 +7,40 @@
 var attractors = [];
 var particles = [];
 
-var length = 8;
-var counter = 350;
+var length = 6;
+var counter;
+var val;
+var bool;
+
+var noise;
+var filter, filterFreq, filterWidth;
 
 function setup() {
   createCanvas(windowWidth,windowHeight);
 
-  for (var i = 0; i < 8; i++) {
+  for (var i = 0; i < length; i++) {
     attractors.push(new Attractor(random(550, width - 550),random(350, height - 350)));
   }
 
   for (var i = 0; i < length; i++) {
     particles[i] = new Array();
+    rand();
     for(var j = 0; j < counter; j++) {
       particles[i].push(new Particles());
     }
   }
+
+  //Sound
+  filter = new p5.BandPass();
+  noise = new p5.Noise();
+  noise.disconnect();
+  filter.process(noise);
+  noise.start();
+  noise.amp(5);
 }
 
 function draw() {
   background(0);
-
 
   for (var i = 0; i < attractors.length; i++) {
     attractors[i].applyBehaviors(attractors);
@@ -53,15 +66,43 @@ function draw() {
       }
       if(j > 0 && j < particles[i].length) {
         stroke(200, 200, 200);
-        strokeWeight(0.03);
+        strokeWeight(0.015);
         line(particles[i][j].pos.x, particles[i][j].pos.y, particles[i][j-1].pos.x, particles[i][j-1].pos.y);
       }
     }
   }
+  //Sound
+  filterFreq = 350;
+  filterWidth = 67.5;
+  filter.set(filterFreq, filterWidth);
+}
 
+function freq() {
+  if (bool) {
+     filterFreq = filterFreq + 0.1;
+     if (desiredseparation >= 350)
+       bool = false;
+   } else {
+     filterFreq = filterFreq - 0.1;
+     if (desiredseparation <= 500)
+       bool = true;
+   }
 }
 
 
-function mouseDragged() {
-  // attractors.push(new Attractor(mouseX,mouseY));
+function rand() {
+  var min = 1;
+  var max = 4;
+  val = Math.round(Math.random() * (max - min)) + min;
+
+  if(val === 1)
+    counter = 250;
+  else if(val === 2)
+    counter = 500;
+  else if(val === 3)
+    counter = 750;
+  else if(val = 4)
+    counter = 1000;
+
+  return counter;
 }

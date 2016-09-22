@@ -10,7 +10,7 @@ function Attractor(x, y) {
   this.velocity = createVector(0, 0);
 
   var desiredseparation = 10;
-  var bool;
+
 
   this.applyBehaviors = function(attractors) {
 
@@ -34,7 +34,7 @@ function Attractor(x, y) {
   this.separate = function(Attractors) {
    if (bool) {
       desiredseparation = desiredseparation + 0.1;
-      if (desiredseparation >= 250)
+      if (desiredseparation >= 160)
         bool = false;
     } else {
       desiredseparation = desiredseparation - 0.1;

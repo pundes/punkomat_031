@@ -46,6 +46,6 @@ function Particles() {
 
   this.display = function() {
     fill(200);
-    ellipse(this.pos.x, this.pos.y, 5, 5);
+    ellipse(this.pos.x, this.pos.y, 1, 1);
   }
 }
